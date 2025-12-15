@@ -21,7 +21,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({
 
   return (
     <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
-      <div className="relative self-stretch mt-[-1.00px] font-medium text-green text-base tracking-[0] leading-[normal]">
+      <div className="relative self-stretch -mt-px font-medium text-green text-base tracking-[0] leading-[normal]">
         {label}
       </div>
 
@@ -49,8 +49,8 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({
             <ChevronDownIcon className="w-5 h-5 text-[#828282]" />
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-[calc(100vw-8rem)] max-w-[512px] p-0 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align="start" sideOffset={8}>
-          <div className="max-h-64 overflow-y-auto">
+        <PopoverContent className="w-(--radix-popover-trigger-width) p-2 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align="start" sideOffset={8}>
+          <div className="max-h-64 overflow-y-auto flex flex-col gap-2">
             {walletOptions.map((wallet) => (
               <button
                 key={wallet.value}
@@ -58,16 +58,16 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({
                   onWalletChange(wallet.value);
                   setIsOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-4 hover:bg-[#f7f7f7] transition-colors border-b border-[#f0f0f0] last:border-b-0 ${
-                  selectedWallet === wallet.value ? "bg-green text-white hover:bg-green" : ""
+                className={`w-full flex items-center gap-3 px-4 py-2 hover:bg-[#f9fafb] transition-colors text-left rounded-xl ${
+                  selectedWallet === wallet.value ? "bg-[#f0fdf4]" : ""
                 }`}
               >
                 {wallet.icon && wallet.icon.startsWith('/') ? (
-                  <Image src={wallet.icon} alt={wallet.label} width={24} height={24} className="w-6 h-6 object-contain" />
+                  <Image src={wallet.icon} alt={wallet.label} width={28} height={28} className="w-7 h-7 object-contain" />
                 ) : (
-                  <span className="text-xl">{wallet.icon}</span>
+                  <span className="text-2xl">{wallet.icon}</span>
                 )}
-                <span className="font-medium text-sm text-left">
+                <span className="font-medium text-sm text-[#111827]">
                   {wallet.label}
                 </span>
               </button>
@@ -78,4 +78,3 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({
     </div>
   );
 };
-

@@ -26,7 +26,7 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
   onCountryCodeChange,
 }) => {
   return (
-    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden">
+    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
       <div className="flex items-center gap-4 px-8 py-6">
         <button
           onClick={onBack}
@@ -49,7 +49,7 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
             placeholder="Enter recipient email"
             value={email}
             onChange={(e) => onEmailChange(e.target.value)}
-            className="h-[50px] px-4 w-full bg-[#ffffff] rounded-xl border border-solid border-[#e0e0e0] font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors"
+            className="h-[50px] px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors"
           />
         </div>
 
@@ -57,7 +57,7 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
           <label className="font-medium text-green text-sm">
             Recipient phone number
           </label>
-          <div className="flex h-[50px] w-full bg-[#ffffff] rounded-xl border border-solid border-[#e0e0e0] overflow-hidden focus-within:border-green transition-colors">
+          <div className="flex h-[50px] w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] overflow-hidden focus-within:border-green transition-colors">
             <CountryCodeSelector
               selectedCode={countryCode}
               onCodeChange={onCountryCodeChange}

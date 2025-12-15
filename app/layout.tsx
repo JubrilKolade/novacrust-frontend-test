@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Outfit, Instrument_Sans, Clash_Display } from "next/font/google";
+import { Outfit, Instrument_Sans, } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from 'sonner'
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -14,7 +16,42 @@ const instrumentSans = Instrument_Sans({
   display: "swap",
 });
 
-// const clashdisplay = Clash_D
+export const clashDisplay = localFont({
+  src: [
+    {
+      path: '../public/fonts/ClashDisplay-Bold.otf',
+      weight: '700',
+      style: 'bold'
+    }, 
+    {
+      path: '../public/fonts/ClashDisplay-SemiBold.otf',
+      weight: '600',
+      style: 'semi-bold'
+    },
+    {
+      path: '../public/fonts/ClashDisplay-Medium.otf',
+      weight: '500',
+      style: 'medium'
+    },
+    {
+      path: '../public/fonts/ClashDisplay-Regular.otf',
+      weight: '400',
+      style: 'regular'
+    },
+    {
+      path: '../public/fonts/ClashDisplay-Light.otf',
+      weight: '300',
+      style: 'light'
+    },
+    {
+      path: '../public/fonts/ClashDisplay-Extralight.otf',
+      weight: '200',
+      style: 'extralight'
+    },
+  ],
+  display: 'swap',
+  variable: '--font-clash-display'
+});
 
 export const metadata: Metadata = {
   title: "Novacrust",
@@ -27,9 +64,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${instrumentSans.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${instrumentSans.variable} ${clashDisplay.variable}`}>
       <body className="antialiased">
         {children}
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

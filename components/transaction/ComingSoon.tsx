@@ -34,7 +34,7 @@ export const ComingSoon: React.FC<ComingSoonProps> = ({
   };
 
   return (
-    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden">
+    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
       <div className="flex justify-center mt-10">
         <Tabs value={selectedTab} onValueChange={onTabChange} className="w-[392px]">
           <TabsList className="grid w-full grid-cols-3 bg-[#f2f2f2] rounded-[30px] h-[34px] p-0">
@@ -52,7 +52,7 @@ export const ComingSoon: React.FC<ComingSoonProps> = ({
       </div>
 
       <div className="flex flex-col items-center justify-center px-8 py-12 flex-1 gap-6">
-        <h1 className="font-bold text-green text-2xl text-center">
+        <h1 className="font-bold text-green text-2xl text-center clashed" >
           Coming Soon!
         </h1>
 

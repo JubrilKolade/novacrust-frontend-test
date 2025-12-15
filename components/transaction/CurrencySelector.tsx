@@ -35,7 +35,7 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   return (
     <Card className="w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0]">
       <CardContent className="flex flex-col items-center justify-center gap-2 p-6">
-        <div className="relative self-stretch mt-[-1.00px] font-medium text-[#828282] text-base tracking-[0] leading-[normal]">
+        <div className="relative self-stretch -mt-px font-medium text-[#828282] text-base tracking-[0] leading-[normal]">
           {label}
         </div>
 
@@ -55,26 +55,24 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
                 ) : (
                   <span className="text-lg">{selected?.icon}</span>
                 )}
-                <div className="relative w-fit mt-[-1.00px] font-medium text-green text-sm tracking-[0] leading-5 whitespace-nowrap">
+                <div className="relative w-fit -mt-px font-medium text-green text-sm tracking-[0] leading-5 whitespace-nowrap">
                   {selected?.label.split(" - ")[0] || selectedCurrency.toUpperCase()}
                 </div>
                 <ChevronDownIcon className="relative w-5 h-5" />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-64 p-0 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align="end">
-              <div className="p-3 border-b border-[#e0e0e0]">
-                <div className="flex items-center gap-2 px-3 py-2 bg-[#f7f7f7] rounded-full">
-                  <SearchIcon className="w-4 h-4 text-[#828282]" />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-transparent border-none outline-none text-sm"
-                  />
-                </div>
+            <PopoverContent className="w-72 p-4 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align="end">
+              <div className="flex items-center gap-2 px-4 py-3 bg-[#f7f7f7] rounded-xl border border-[#e0e0e0] mb-3">
+                <SearchIcon className="w-4 h-4 text-[#9ca3af]" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 bg-transparent border-none outline-none text-sm placeholder:text-[#9ca3af]"
+                />
               </div>
-              <div className="max-h-48 overflow-y-auto">
+              <div className="max-h-64 overflow-y-auto flex flex-col gap-2">
                 {filteredCurrencies.map((currency) => (
                   <button
                     key={currency.value}
@@ -83,16 +81,16 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
                       setIsOpen(false);
                       setSearchQuery("");
                     }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-[#f7f7f7] transition-colors ${
-                      selectedCurrency === currency.value ? "bg-green text-white hover:bg-green" : ""
+                    className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-[#f9fafb] transition-colors text-left rounded-xl ${
+                      selectedCurrency === currency.value ? "bg-[#f0fdf4]" : ""
                     }`}
                   >
                     {currency.icon && currency.icon.startsWith('/') ? (
-                      <Image src={currency.icon} alt={currency.label} width={24} height={24} className="w-6 h-6 object-contain" />
+                      <Image src={currency.icon} alt={currency.label} width={28} height={28} className="w-7 h-7 object-contain rounded-full" />
                     ) : (
-                      <span className="text-xl">{currency.icon}</span>
+                      <span className="text-2xl">{currency.icon}</span>
                     )}
-                    <span className="font-medium text-sm">
+                    <span className="font-medium text-sm text-[#111827]">
                       {currency.label}
                     </span>
                   </button>

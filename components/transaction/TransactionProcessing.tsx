@@ -2,6 +2,7 @@
 import { Check } from "lucide-react";
 import React, { useState } from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export interface TransactionProcessingProps {
   transactionId: string;
@@ -18,34 +19,42 @@ export const TransactionProcessing: React.FC<TransactionProcessingProps> = ({
     try {
       await navigator.clipboard.writeText(transactionId);
       setCopied(true);
+      toast.success('Transaction ID copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy transaction ID:', err);
+      toast.error('Failed to copy transaction ID');
     }
   };
 
   return (
-    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden">
+    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
       {/* Logo Section */}
       <div className="flex justify-center items-center pt-8 pb-4">
         <div className="flex items-center gap-2">
           <Image 
             src="/Novacrust logo.png" 
             alt="Novacrust" 
-            width={24} 
+            width={120} 
             height={24} 
-            className="w-6 h-6 object-contain"
+            className="w-[200px] h-6 object-contain"
           />
-          <span className="font-bold text-green text-xl">
+          {/* <span className="font-bold text-green text-xl">
             NOVACRUST
-          </span>
+          </span> */}
         </div>
       </div>
 
       <div className="flex flex-col items-center justify-center px-8 py-8 flex-1 gap-6">
         {/* Success Icon */}
-        <div className="w-20 h-20 bg-green rounded-full flex items-center justify-center">
+        <div className="w-20 h-20 bg-[#219653]  rounded-full flex items-center justify-center">
           <Check className="w-10 h-10 text-white" strokeWidth={3} />
+          {/* <Image 
+            alt="check" 
+            src='/transaction-processing.png' 
+            width={100}
+            height={100}
+          /> */}
         </div>
 
         {/* Messages */}
