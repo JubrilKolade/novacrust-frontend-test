@@ -78,7 +78,21 @@ novacrust/
 
 ## Assessment Submission
 
-This is a submission entry for the novacrust test for frontend
+This is a submission entry for the novacrust test for frontend.
+
+## Assumptions and Trade-offs
+
+-   **Mock Data Integration**: For the purpose of this assessment, all transaction processing, currency rates, and wallet validation are simulated with local mock data and `setTimeout` delays. No real backend endpoints are called.
+-   **State Management**: I opted for local React state (`useState`) lifted to the parent components (`TransactionModal`, `CryptoToCash`) rather than a global store like Redux or Zustand. This keeps the architecture simple and sufficient for the current scope.
+-   **Validation**: Basic validation is implemented for required fields. In a production environment, I would use libraries like **Zod** and **React Hook Form** for more robust, schema-based validation.
+-   **Asset Selection**: Icons and flags are static assets in the `public` folder. In a real app, these might be served from a CDN.
+
+## Future Improvements & Suggestions
+
+-   **Live Data**: Integrate with a real crypto price API (e.g., CoinGecko or CoinMarketCap) to fetch real-time exchange rates.
+-   **Testing**: Implement unit tests (using Vitest) for utility functions and component testing (React Testing Library) to ensure reliability.
+-   **Accessibility (a11y)**: While basic keyboard navigation is supported, a full accessibility audit (ARIA attributes, screen reader testing) would be beneficial for a production-ready financial app.
+-   **Form Architecture**: Scale the form handling with React Hook Form to manage touch states, errors, and validation logic more efficiently.
 
 ## License
 
