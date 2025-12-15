@@ -193,7 +193,7 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
 
     return (
         <>
-            <div className="flex flex-col ml-16 w-[512px] gap-6 overflow-y-auto flex-1 pr-4 [font-family:var(--font-outfit)]">
+            <div className="flex flex-col w-full max-w-[512px] mx-auto gap-6 overflow-y-auto flex-1 px-4 md:px-0 [font-family:var(--font-outfit)]">
                 <CurrencySelector
                     label="You pay"
                     amount={payAmount}
@@ -241,7 +241,7 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
                 />
             </div>
 
-            <div className="flex ml-16 w-[512px] mb-10">
+            <div className="flex w-full max-w-[512px] mx-auto mb-10 px-4 md:px-0">
                 <Button
                     onClick={() => {
                         if (validateStep1()) {

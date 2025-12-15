@@ -13,12 +13,12 @@ export const TransactionModal = (): JSX.Element => {
 
   return (
     <div className={`transition-all duration-300 ${isFlowActive
-        ? "w-full max-w-[640px] flex justify-center"
-        : "bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col gap-10 rounded-[30px] overflow-hidden"
+      ? "w-full max-w-[640px] flex justify-center"
+      : "bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col gap-10 rounded-[30px] overflow-hidden"
       }`}>
       {!isFlowActive && (
-        <div className="flex justify-center mt-10">
-          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-[392px]">
+        <div className="flex justify-center mt-10 w-full px-4">
+          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full max-w-[392px]">
             <TabsList className="grid w-full grid-cols-3 bg-[#f2f2f2] rounded-[30px] h-[34px] p-0">
               {tabOptions.map((tab) => (
                 <TabsTrigger

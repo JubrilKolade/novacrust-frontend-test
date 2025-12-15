@@ -10,6 +10,14 @@ Novacrust is a modern web application designed solely for seamless crypto-to-cas
     -   Contact Information
     -   Secure Payment Confirmation
     -   Real-time Transaction Processing Status
+-   **Robust Input Validation**:
+    -   Type-safe inputs (numeric-only for amounts, etc.)
+    -   Real-time error feedback (red border alerts and error messages)
+    -   Step-by-step form validation ensuring partial data isn't submitted
+-   **Fully Responsive Mobile Design**:
+    -   Fluid layouts that adapt to any screen size
+    -   Touch-optimized navigation and form controls
+    -   Dynamic UI adjustments (hiding tabs in deep flows) for better mobile UX
 -   **Future Features (Coming Soon)**:
     -   **Cash to Crypto**: Purchase digital assets using fiat.
     -   **Crypto to Fiat Loan**: Leverage crypto assets for fiat loans.
@@ -27,7 +35,7 @@ Novacrust is a modern web application designed solely for seamless crypto-to-cas
 -   **Fonts**:
     -   [Outfit](https://fonts.google.com/specimen/Outfit) (Primary)
     -   [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) (Secondary/Buttons)
-    -   [Clash Display] (https://befonts.com/clash-display-font.html) (tertiary wordings and crypto)
+    -   [Clash Display](https://befonts.com/clash-display-font.html) (Tertiary/Headings)
 
 ## Getting Started
 
@@ -84,7 +92,7 @@ This is a submission entry for the novacrust test for frontend.
 
 -   **Mock Data Integration**: For the purpose of this assessment, all transaction processing, currency rates, and wallet validation are simulated with local mock data and `setTimeout` delays. No real backend endpoints are called.
 -   **State Management**: I opted for local React state (`useState`) lifted to the parent components (`TransactionModal`, `CryptoToCash`) rather than a global store like Redux or Zustand. This keeps the architecture simple and sufficient for the current scope.
--   **Validation**: Basic validation is implemented for required fields. In a production environment, I would use libraries like **Zod** and **React Hook Form** for more robust, schema-based validation.
+-   **Validation**: Custom validation logic is implemented using local state and regex patterns. While I mentioned Zod/React Hook Form as a future improvement, the current implementation provides robust error handling, type safety (preventing non-numeric input), and user feedback without external dependencies.
 -   **Asset Selection**: Icons and flags are static assets in the `public` folder. In a real app, these might be served from a CDN.
 
 ## Future Improvements & Suggestions
