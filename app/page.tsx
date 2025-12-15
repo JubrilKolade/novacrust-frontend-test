@@ -1,4 +1,4 @@
-import { TransactionModal } from "@/components/TransactionModal";
+import { TransactionModal } from "@/components/transaction/TransactionModal";
 
 export default function Home() {
   return (
