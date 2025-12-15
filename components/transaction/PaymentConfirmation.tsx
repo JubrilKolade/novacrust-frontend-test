@@ -1,6 +1,7 @@
 'use client'
+
 import { ArrowLeftIcon, Info, Copy } from "lucide-react";
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
@@ -16,7 +17,7 @@ export interface PaymentConfirmationProps {
   currencyIcon?: string;
 }
 
-export const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
+export const PaymentConfirmation: FC<PaymentConfirmationProps> = ({
   onBack,
   onConfirm,
   currency,

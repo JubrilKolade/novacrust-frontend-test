@@ -1,6 +1,7 @@
 'use client'
+
 import { ChevronDownIcon } from "lucide-react";
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 
@@ -23,7 +24,7 @@ export interface CountryCodeSelectorProps {
   onCodeChange: (code: CountryCode) => void;
 }
 
-export const CountryCodeSelector: React.FC<CountryCodeSelectorProps> = ({
+export const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
   selectedCode,
   onCodeChange,
 }) => {

@@ -1,6 +1,7 @@
 'use client'
+
 import { Check } from "lucide-react";
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -9,7 +10,7 @@ export interface TransactionProcessingProps {
   onGoHome: () => void;
 }
 
-export const TransactionProcessing: React.FC<TransactionProcessingProps> = ({
+export const TransactionProcessing: FC<TransactionProcessingProps> = ({
   transactionId,
   onGoHome,
 }) => {

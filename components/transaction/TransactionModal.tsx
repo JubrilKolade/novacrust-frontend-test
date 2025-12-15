@@ -1,5 +1,6 @@
 'use client'
-import React, { JSX, useState } from "react";
+
+import { JSX, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { tabOptions } from "./constants";
 import { CryptoToCash } from "./tabs/CryptoToCash";

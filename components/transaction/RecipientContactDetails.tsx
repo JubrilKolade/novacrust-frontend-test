@@ -1,8 +1,9 @@
 'use client'
+
 import { ArrowLeftIcon } from "lucide-react";
-import React from "react";
 import { Button } from "../ui/button";
 import { CountryCodeSelector, type CountryCode } from "./CountryCodeSelector";
+import { FC } from "react";
 
 export interface RecipientContactDetailsProps {
   onBack: () => void;
@@ -13,9 +14,13 @@ export interface RecipientContactDetailsProps {
   onPhoneNumberChange: (phone: string) => void;
   countryCode: CountryCode;
   onCountryCodeChange: (code: CountryCode) => void;
+  errors?: {
+    email?: string;
+    phoneNumber?: string;
+  };
 }
 
-export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = ({
+export const RecipientContactDetails: FC<RecipientContactDetailsProps> = ({
   onBack,
   onNext,
   email,
@@ -24,6 +29,7 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
   onPhoneNumberChange,
   countryCode,
   onCountryCodeChange,
+  errors,
 }) => {
   return (
     <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
@@ -41,23 +47,31 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
 
       <div className="flex flex-col px-8 gap-6 flex-1">
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-green text-sm">
-            Recipient email
-          </label>
+          <div className="flex justify-between w-full">
+            <label className="font-medium text-green text-sm">
+              Recipient email
+            </label>
+            {errors?.email && <span className="text-xs text-red-500 font-medium">{errors.email}</span>}
+          </div>
           <input
             type="email"
             placeholder="Enter recipient email"
             value={email}
             onChange={(e) => onEmailChange(e.target.value)}
-            className="h-[50px] px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors"
+            className={`h-[50px] px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors ${errors?.email ? "border-red-500" : "border-[#e0e0e0]"
+              }`}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-green text-sm">
-            Recipient phone number
-          </label>
-          <div className="flex h-[50px] w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] overflow-hidden focus-within:border-green transition-colors">
+          <div className="flex justify-between w-full">
+            <label className="font-medium text-green text-sm">
+              Recipient phone number
+            </label>
+            {errors?.phoneNumber && <span className="text-xs text-red-500 font-medium">{errors.phoneNumber}</span>}
+          </div>
+          <div className={`flex h-[50px] w-full bg-[#ffffff] rounded-[30px] border border-solid overflow-hidden focus-within:border-green transition-colors ${errors?.phoneNumber ? "border-red-500" : "border-[#e0e0e0]"
+            }`}>
             <CountryCodeSelector
               selectedCode={countryCode}
               onCodeChange={onCountryCodeChange}
@@ -66,7 +80,13 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
               type="tel"
               placeholder="000 - 000 - 00000"
               value={phoneNumber}
-              onChange={(e) => onPhoneNumberChange(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                // Allow only digits and dashes
+                if (/^[\d-\s]*$/.test(val)) {
+                  onPhoneNumberChange(val);
+                }
+              }}
               className="flex-1 px-4 bg-transparent font-normal text-base text-black placeholder:text-[#828282] outline-none"
             />
           </div>
@@ -74,7 +94,7 @@ export const RecipientContactDetails: React.FC<RecipientContactDetailsProps> = (
       </div>
 
       <div className="px-8 py-8">
-        <Button 
+        <Button
           onClick={onNext}
           className="flex w-full h-[60px] items-center justify-center gap-2 px-10 py-5 bg-green rounded-[30px] hover:bg-green/90"
         >

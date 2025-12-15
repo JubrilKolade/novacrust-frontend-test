@@ -29,6 +29,7 @@ export const CryptoToCash = () => {
         flag: "/ng.png",
     });
     const [transactionId, setTransactionId] = useState("");
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const handleAccountNumberChange = (number: string) => {
         setAccountNumber(number);
@@ -39,16 +40,43 @@ export const CryptoToCash = () => {
         }
     };
 
+    const validateStep1 = () => {
+        const newErrors: Record<string, string> = {};
+        if (!payAmount || parseFloat(payAmount) <= 0) newErrors.payAmount = "Invalid amount";
+        if (!receiveAmount || parseFloat(receiveAmount) <= 0) newErrors.receiveAmount = "Invalid amount";
+        if (!payFrom) newErrors.payFrom = "Required";
+        if (!payTo) newErrors.payTo = "Required";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     if (step === "recipient-bank") {
         return (
             <RecipientDetails
                 onBack={() => setStep("convert")}
-                onNext={() => setStep("recipient-contact")}
+                onNext={() => {
+                    const newErrors: Record<string, string> = {};
+                    if (!selectedBank) newErrors.bank = "Required";
+                    if (!accountNumber || accountNumber.length < 10) newErrors.accountNumber = "Invalid account number";
+
+                    setErrors(newErrors);
+                    if (Object.keys(newErrors).length === 0) {
+                        setStep("recipient-contact");
+                    }
+                }}
                 selectedBank={selectedBank}
-                onBankChange={setSelectedBank}
+                onBankChange={(val) => {
+                    setSelectedBank(val);
+                    if (errors.bank) setErrors({ ...errors, bank: "" });
+                }}
                 accountNumber={accountNumber}
-                onAccountNumberChange={handleAccountNumberChange}
+                onAccountNumberChange={(val) => {
+                    handleAccountNumberChange(val);
+                    if (errors.accountNumber) setErrors({ ...errors, accountNumber: "" });
+                }}
                 accountName={accountName}
+                errors={errors}
             />
         );
     }
@@ -57,13 +85,29 @@ export const CryptoToCash = () => {
         return (
             <RecipientContactDetails
                 onBack={() => setStep("recipient-bank")}
-                onNext={() => setStep("payment-confirmation")}
+                onNext={() => {
+                    const newErrors: Record<string, string> = {};
+                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = "Invalid email";
+                    if (!phoneNumber || phoneNumber.length < 7) newErrors.phoneNumber = "Invalid phone";
+
+                    setErrors(newErrors);
+                    if (Object.keys(newErrors).length === 0) {
+                        setStep("payment-confirmation");
+                    }
+                }}
                 email={email}
-                onEmailChange={setEmail}
+                onEmailChange={(val) => {
+                    setEmail(val);
+                    if (errors.email) setErrors({ ...errors, email: "" });
+                }}
                 phoneNumber={phoneNumber}
-                onPhoneNumberChange={setPhoneNumber}
+                onPhoneNumberChange={(val) => {
+                    setPhoneNumber(val);
+                    if (errors.phoneNumber) setErrors({ ...errors, phoneNumber: "" });
+                }}
                 countryCode={countryCode}
                 onCountryCodeChange={setCountryCode}
+                errors={errors}
             />
         );
     }
@@ -137,6 +181,7 @@ export const CryptoToCash = () => {
                     setEmail("");
                     setPhoneNumber("");
                     setTransactionId("");
+                    setErrors({});
                 }}
             />
         );
@@ -151,7 +196,11 @@ export const CryptoToCash = () => {
                     selectedCurrency={payCurrency}
                     currencies={cryptoCurrencies}
                     onCurrencyChange={setPayCurrency}
-                    onAmountChange={setPayAmount}
+                    onAmountChange={(val) => {
+                        setPayAmount(val);
+                        if (errors.payAmount) setErrors({ ...errors, payAmount: "" });
+                    }}
+                    error={errors.payAmount}
                 />
 
                 <CurrencySelector
@@ -160,25 +209,41 @@ export const CryptoToCash = () => {
                     selectedCurrency={receiveCurrency}
                     currencies={fiatCurrencies}
                     onCurrencyChange={setReceiveCurrency}
-                    onAmountChange={setReceiveAmount}
+                    onAmountChange={(val) => {
+                        setReceiveAmount(val);
+                        if (errors.receiveAmount) setErrors({ ...errors, receiveAmount: "" });
+                    }}
+                    error={errors.receiveAmount}
                 />
 
                 <WalletSelector
                     label="Pay from"
                     selectedWallet={payFrom}
-                    onWalletChange={setPayFrom}
+                    onWalletChange={(val) => {
+                        setPayFrom(val);
+                        if (errors.payFrom) setErrors({ ...errors, payFrom: "" });
+                    }}
+                    error={errors.payFrom}
                 />
 
                 <WalletSelector
                     label="Pay to"
                     selectedWallet={payTo}
-                    onWalletChange={setPayTo}
+                    onWalletChange={(val) => {
+                        setPayTo(val);
+                        if (errors.payTo) setErrors({ ...errors, payTo: "" });
+                    }}
+                    error={errors.payTo}
                 />
             </div>
 
             <div className="flex ml-16 w-[512px] mb-10">
                 <Button
-                    onClick={() => setStep("recipient-bank")}
+                    onClick={() => {
+                        if (validateStep1()) {
+                            setStep("recipient-bank");
+                        }
+                    }}
                     className="flex w-full h-[60px] items-center justify-center gap-2 px-10 py-5 bg-green rounded-[30px] hover:bg-green/90"
                 >
                     <span className="relative w-fit -mt-px font-bold text-[#e6fbf2] text-base tracking-[0] leading-[normal]">

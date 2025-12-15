@@ -1,8 +1,9 @@
 'use client'
+
 import { ArrowLeftIcon } from "lucide-react";
-import React from "react";
 import { Button } from "../ui/button";
 import { BankSelector } from "./BankSelector";
+import { FC } from "react";
 
 export interface RecipientDetailsProps {
   onBack: () => void;
@@ -12,9 +13,13 @@ export interface RecipientDetailsProps {
   accountNumber: string;
   onAccountNumberChange: (number: string) => void;
   accountName: string;
+  errors?: {
+    bank?: string;
+    accountNumber?: string;
+  };
 }
 
-export const RecipientDetails: React.FC<RecipientDetailsProps> = ({
+export const RecipientDetails: FC<RecipientDetailsProps> = ({
   onBack,
   onNext,
   selectedBank,
@@ -22,6 +27,7 @@ export const RecipientDetails: React.FC<RecipientDetailsProps> = ({
   accountNumber,
   onAccountNumberChange,
   accountName,
+  errors,
 }) => {
   return (
     <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
@@ -41,18 +47,29 @@ export const RecipientDetails: React.FC<RecipientDetailsProps> = ({
         <BankSelector
           selectedBank={selectedBank}
           onBankChange={onBankChange}
+          error={errors?.bank}
         />
 
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-black text-sm">
-            Account number
-          </label>
+          <div className="flex justify-between w-full">
+            <label className="font-medium text-black text-sm">
+              Account number
+            </label>
+            {errors?.accountNumber && <span className="text-xs text-red-500 font-medium">{errors.accountNumber}</span>}
+          </div>
           <input
             type="text"
             placeholder="Enter your account number"
             value={accountNumber}
-            onChange={(e) => onAccountNumberChange(e.target.value)}
-            className="h-[50px] px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors"
+            onChange={(e) => {
+              const val = e.target.value;
+              // Allow only digits
+              if (/^\d*$/.test(val)) {
+                onAccountNumberChange(val);
+              }
+            }}
+            className={`h-[50px] px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid font-normal text-base text-black placeholder:text-[#828282] outline-none focus:border-green transition-colors ${errors?.accountNumber ? "border-red-500" : "border-[#e0e0e0]"
+              }`}
           />
         </div>
 
@@ -71,7 +88,7 @@ export const RecipientDetails: React.FC<RecipientDetailsProps> = ({
       </div>
 
       <div className="px-8 py-8 mt-auto">
-        <Button 
+        <Button
           onClick={onNext}
           className="flex w-full h-[60px] items-center justify-center gap-2 px-10 py-5 bg-green rounded-[30px] hover:bg-green/90"
         >

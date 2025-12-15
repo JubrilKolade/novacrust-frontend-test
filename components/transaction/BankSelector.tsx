@@ -1,33 +1,40 @@
 'use client'
+
 import { ChevronDownIcon } from "lucide-react";
-import React from "react";
 import { Selector } from "./Selector";
 import { bankOptions } from "./constants";
+import { FC } from "react";
 
 export interface BankSelectorProps {
   selectedBank: string;
   onBankChange: (bank: string) => void;
   label?: string;
+  error?: string;
 }
 
-export const BankSelector: React.FC<BankSelectorProps> = ({
+export const BankSelector: FC<BankSelectorProps> = ({
   selectedBank,
   onBankChange,
   label = "Bank",
+  error,
 }) => {
   const selected = bankOptions.find((b) => b.value === selectedBank);
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-medium text-black text-sm">
-        {label}
-      </label>
+      <div className="flex justify-between w-full">
+        <label className="font-medium text-black text-sm">
+          {label}
+        </label>
+        {error && <span className="text-xs text-red-500 font-medium">{error}</span>}
+      </div>
       <Selector
         options={bankOptions}
         selectedValue={selectedBank}
         onSelect={onBankChange}
         placeholder="Select an option"
         align="start"
+        error={!!error}
       >
         <button className="flex h-[50px] items-center justify-between px-4 w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] hover:bg-[#fafafa] transition-colors">
           <span className={`font-normal text-base ${selected ? "text-black" : "text-[#828282]"}`}>

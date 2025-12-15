@@ -1,10 +1,11 @@
 'use client'
+
 import { ChevronDownIcon } from "lucide-react";
-import React from "react";
 import Image from "next/image";
 import { Card, CardContent } from "../ui/card";
 import { Selector } from "./Selector";
 import type { CurrencyOption } from "./constants";
+import { FC } from "react";
 
 export interface CurrencySelectorProps {
   label: string;
@@ -13,31 +14,44 @@ export interface CurrencySelectorProps {
   currencies: CurrencyOption[];
   onCurrencyChange: (currency: string) => void;
   onAmountChange: (amount: string) => void;
+  error?: string;
 }
 
-export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
+export const CurrencySelector: FC<CurrencySelectorProps> = ({
   label,
   amount,
   selectedCurrency,
   currencies,
   onCurrencyChange,
   onAmountChange,
+  error,
 }) => {
   const selected = currencies.find((c) => c.value === selectedCurrency);
 
   return (
-    <Card className="w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0]">
+    <Card className={`w-full bg-[#ffffff] rounded-[30px] border border-solid transition-colors ${error ? "border-red-500" : "border-[#e0e0e0]"
+      }`}>
       <CardContent className="flex flex-col items-center justify-center gap-2 p-6">
-        <div className="relative self-stretch -mt-px font-medium text-[#828282] text-base tracking-[0] leading-[normal]">
-          {label}
+        <div className="flex justify-between w-full">
+          <div className="relative self-stretch -mt-px font-medium text-[#828282] text-base tracking-[0] leading-[normal]">
+            {label}
+          </div>
+          {error && <span className="text-xs text-red-500 font-medium">{error}</span>}
         </div>
 
         <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto] rounded-[30px]">
           <input
             type="text"
             value={amount}
-            onChange={(e) => onAmountChange(e.target.value)}
-            className="relative w-24 font-semibold text-black text-2xl tracking-[0] leading-[normal] bg-transparent border-none outline-none"
+            onChange={(e) => {
+              // Allow only numbers and decimal point
+              const val = e.target.value;
+              if (/^\d*\.?\d*$/.test(val)) {
+                onAmountChange(val);
+              }
+            }}
+            placeholder="0.00"
+            className="relative w-32 font-semibold text-black text-2xl tracking-[0] leading-[normal] bg-transparent border-none outline-none placeholder:text-gray-300"
           />
 
           <Selector

@@ -1,6 +1,7 @@
 'use client'
+
 import { ChevronDownIcon, SearchIcon } from "lucide-react";
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 
@@ -19,15 +20,17 @@ interface SelectorProps {
     searchable?: boolean;
     align?: "start" | "center" | "end";
     children?: React.ReactNode;
+    error?: boolean;
 }
 
-export const Selector: React.FC<SelectorProps> = ({
+export const Selector: FC<SelectorProps> = ({
     options,
     selectedValue,
     onSelect,
     placeholder = "Select an option",
     searchable = false,
     align = "start",
+    error = false,
     children
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +46,8 @@ export const Selector: React.FC<SelectorProps> = ({
         <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
                 {children || (
-                    <button className="flex h-[60px] items-center justify-between px-6 relative self-stretch w-full bg-[#ffffff] rounded-[30px] border border-solid border-[#e0e0e0] hover:bg-[#fafafa] transition-colors">
+                    <button className={`flex h-[60px] items-center justify-between px-6 relative self-stretch w-full bg-[#ffffff] rounded-[30px] border border-solid transition-colors ${error ? "border-red-500 hover:bg-red-50" : "border-[#e0e0e0] hover:bg-[#fafafa]"
+                        }`}>
                         <div className="flex items-center gap-3">
                             {selected ? (
                                 <>
@@ -57,12 +61,12 @@ export const Selector: React.FC<SelectorProps> = ({
                                     </span>
                                 </>
                             ) : (
-                                <span className="font-normal text-[#828282] text-base">
+                                <span className={`font-normal text-base ${error ? "text-red-500" : "text-[#828282]"}`}>
                                     {placeholder}
                                 </span>
                             )}
                         </div>
-                        <ChevronDownIcon className="w-5 h-5 text-[#828282]" />
+                        <ChevronDownIcon className={`w-5 h-5 ${error ? "text-red-500" : "text-[#828282]"}`} />
                     </button>
                 )}
             </PopoverTrigger>
