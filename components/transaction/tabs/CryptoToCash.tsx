@@ -10,8 +10,12 @@ import { TransactionProcessing } from "../TransactionProcessing";
 import { cryptoCurrencies, fiatCurrencies, walletOptions } from "../constants";
 import type { CountryCode } from "../CountryCodeSelector";
 
-export const CryptoToCash = () => {
+export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: boolean) => void }) => {
     const [step, setStep] = useState<"convert" | "recipient-bank" | "recipient-contact" | "payment-confirmation" | "processing">("convert");
+
+    React.useEffect(() => {
+        onFlowChange?.(step !== "convert");
+    }, [step, onFlowChange]);
     const [payAmount, setPayAmount] = useState("1.00");
     const [receiveAmount, setReceiveAmount] = useState("1.00");
     const [payCurrency, setPayCurrency] = useState("eth");

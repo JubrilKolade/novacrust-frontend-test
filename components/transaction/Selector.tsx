@@ -56,7 +56,7 @@ export const Selector: FC<SelectorProps> = ({
                                     ) : (
                                         <span className="text-xl">{selected?.icon}</span>
                                     )}
-                                    <span className="font-normal text-green text-base">
+                                    <span className="font-normal text-green text-base clashed">
                                         {selected?.label}
                                     </span>
                                 </>
@@ -100,7 +100,7 @@ export const Selector: FC<SelectorProps> = ({
                             ) : (
                                 <span className="text-2xl">{option.icon}</span>
                             )}
-                            <span className="font-medium text-sm text-[#111827]">
+                            <span className="font-medium text-sm text-[#111827] clashed">
                                 {option.label}
                             </span>
                         </button>

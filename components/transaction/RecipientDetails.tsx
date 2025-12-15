@@ -30,7 +30,7 @@ export const RecipientDetails: FC<RecipientDetailsProps> = ({
   errors,
 }) => {
   return (
-    <div className="bg-[#ffffff] border border-solid border-[#ccf6e5] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
+    <div className="bg-[#ffffff] w-full max-w-[640px] max-h-[90vh] flex flex-col rounded-[30px] overflow-hidden [font-family:var(--font-outfit)]">
       <div className="flex items-center gap-4 px-8 py-6">
         <button
           onClick={onBack}
@@ -43,7 +43,7 @@ export const RecipientDetails: FC<RecipientDetailsProps> = ({
         </h2>
       </div>
 
-      <div className="flex flex-col px-8 gap-6 flex-1 overflow-y-auto">
+      <div className="flex flex-col px-8 gap-6 flex-1 overflow-y-auto mb-[150px]">
         <BankSelector
           selectedBank={selectedBank}
           onBankChange={onBankChange}
@@ -73,18 +73,16 @@ export const RecipientDetails: FC<RecipientDetailsProps> = ({
           />
         </div>
 
-        {accountName && (
-          <div className="flex flex-col gap-2">
-            <label className="font-medium text-black text-sm">
-              Account name
-            </label>
-            <div className="h-[50px] px-4 w-full bg-[#f7f7f7] rounded-[30px] flex items-center border border-solid border-[#e0e0e0]">
-              <span className="font-normal text-base text-black uppercase">
-                {accountName}
-              </span>
-            </div>
+        <div className={`flex flex-col gap-2 transition-opacity duration-300 ${accountName ? "opacity-100" : "opacity-0"}`}>
+          <label className="font-medium text-black text-sm">
+            Account name
+          </label>
+          <div className="h-[50px] px-4 w-full bg-[#f7f7f7] rounded-[30px] flex items-center border border-solid border-[#e0e0e0]">
+            <span className="font-normal text-base text-black uppercase">
+              {accountName || "Placeholder"}
+            </span>
           </div>
-        )}
+        </div>
       </div>
 
       <div className="px-8 py-8 mt-auto">

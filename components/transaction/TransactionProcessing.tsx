@@ -100,7 +100,7 @@ export const TransactionProcessing: FC<TransactionProcessingProps> = ({
       <div className="px-8 pb-8">
         <button
           onClick={onGoHome}
-          className="w-full font-medium text-green text-base hover:opacity-80 transition-opacity"
+          className="w-full font-bold text-green text-base hover:opacity-80 transition-opacity"
         >
           Go back to home
         </button>
