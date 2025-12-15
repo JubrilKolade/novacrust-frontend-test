@@ -66,7 +66,7 @@ export const Selector: React.FC<SelectorProps> = ({
                     </button>
                 )}
             </PopoverTrigger>
-            <PopoverContent className="w-[var(--radix-popover-trigger-width)] min-w-[200px] p-4 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align={align}>
+            <PopoverContent className="w-(--radix-popover-trigger-width) min-w-[200px] p-4 bg-white rounded-2xl shadow-lg border border-[#e0e0e0]" align={align}>
                 {searchable && (
                     <div className="flex items-center gap-2 px-4 py-3 bg-[#f7f7f7] rounded-xl border border-[#e0e0e0] mb-3">
                         <SearchIcon className="w-4 h-4 text-[#9ca3af]" />
