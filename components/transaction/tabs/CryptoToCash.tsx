@@ -17,7 +17,7 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
         onFlowChange?.(step !== "convert");
     }, [step, onFlowChange]);
     const [payAmount, setPayAmount] = useState("1.00");
-    const [receiveAmount, setReceiveAmount] = useState("1.00");
+    const [receiveAmount, setReceiveAmount] = useState("4317023.30");
     const [payCurrency, setPayCurrency] = useState("eth");
     const [receiveCurrency, setReceiveCurrency] = useState("ngn");
     const [payFrom, setPayFrom] = useState("");
@@ -35,6 +35,19 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
     const [transactionId, setTransactionId] = useState("");
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isConverting, setIsConverting] = useState(false);
+
+    // Exchange rates (Base: 1 ETH)
+    const exchangeRates: Record<string, number> = {
+        ngn: 4317023.30,
+        usd: 2973.74,
+        eur: 2531.74,
+        gbp: 2225.57,
+    };
+
+    const formatAmount = (val: number) => {
+        // Format to 2 decimal places, remove trailing zeros if integer
+        return val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/,/g, '');
+    };
 
     const handleAccountNumberChange = (number: string) => {
         setAccountNumber(number);
@@ -200,10 +213,25 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
                     amount={payAmount}
                     selectedCurrency={payCurrency}
                     currencies={cryptoCurrencies}
-                    onCurrencyChange={setPayCurrency}
+                    onCurrencyChange={(newCurrency) => {
+                        setPayCurrency(newCurrency);
+                        // Recalculate receive amount based on new currency (assuming only ETH rates are provided, else 1:1)
+                        if (newCurrency === 'eth' && exchangeRates[receiveCurrency]) {
+                            const rate = exchangeRates[receiveCurrency];
+                            const newReceive = parseFloat(payAmount || "0") * rate;
+                            setReceiveAmount(newReceive > 0 ? formatAmount(newReceive) : "");
+                        }
+                    }}
                     onAmountChange={(val) => {
                         setPayAmount(val);
                         if (errors.payAmount) setErrors({ ...errors, payAmount: "" });
+
+                        // Calculate receive amount
+                        if (payCurrency === 'eth' && exchangeRates[receiveCurrency]) {
+                            const rate = exchangeRates[receiveCurrency];
+                            const newReceive = parseFloat(val || "0") * rate;
+                            setReceiveAmount(newReceive > 0 ? formatAmount(newReceive) : "");
+                        }
                     }}
                     error={errors.payAmount}
                 />
@@ -213,10 +241,26 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
                     amount={receiveAmount}
                     selectedCurrency={receiveCurrency}
                     currencies={fiatCurrencies}
-                    onCurrencyChange={setReceiveCurrency}
+                    onCurrencyChange={(newCurrency) => {
+                        setReceiveCurrency(newCurrency);
+                        // Recalculate based on pay amount (keep pay amount constant, update receive)
+                        if (payCurrency === 'eth' && exchangeRates[newCurrency]) {
+                            const rate = exchangeRates[newCurrency];
+                            const newReceive = parseFloat(payAmount || "0") * rate;
+                            setReceiveAmount(newReceive > 0 ? formatAmount(newReceive) : "");
+                        }
+                    }}
                     onAmountChange={(val) => {
                         setReceiveAmount(val);
                         if (errors.receiveAmount) setErrors({ ...errors, receiveAmount: "" });
+
+                        // Calculate pay amount (inverse)
+                        if (payCurrency === 'eth' && exchangeRates[receiveCurrency]) {
+                            const rate = exchangeRates[receiveCurrency];
+                            const newPay = parseFloat(val || "0") / rate;
+                            // Format ETH to 4-6 decimals for precision
+                            setPayAmount(newPay > 0 ? newPay.toFixed(6).replace(/\.?0+$/, '') : "");
+                        }
                     }}
                     error={errors.receiveAmount}
                 />
