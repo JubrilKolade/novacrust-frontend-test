@@ -22,9 +22,9 @@ export const clashDisplay = localFont({
       path: '../public/fonts/ClashDisplay-Bold.otf',
       weight: '700',
       style: 'bold'
-    }, 
+    },
     {
-      path: '../public/fonts/ClashDisplay-SemiBold.otf',
+      path: '../public/fonts/ClashDisplay-Semibold.otf',
       weight: '600',
       style: 'semi-bold'
     },
