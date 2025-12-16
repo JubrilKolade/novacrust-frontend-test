@@ -30,9 +30,9 @@ export const bankOptions = [
   { value: "firstbank", label: "First Bank" },
   { value: "zenith", label: "Zenith Bank" },
   { value: "access", label: "Access Bank" },
-  { value: "uba", label: "UBA" },
-  { value: "kuda", label: "Kuda Bank" },
-  { value: "opay", label: "OPay" },
+  // { value: "uba", label: "UBA" },
+  // { value: "kuda", label: "Kuda Bank" },
+  // { value: "opay", label: "OPay" },
 ];
 
 export type CurrencyOption = typeof cryptoCurrencies[number];

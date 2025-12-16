@@ -90,7 +90,7 @@ This is a submission entry for the novacrust test for frontend.
 
 ## Assumptions and Trade-offs
 
--   **Mock Data Integration**: For the purpose of this assessment, all transaction processing, currency rates, and wallet validation are simulated with local mock data and `setTimeout` delays. No real backend endpoints are called.
+-   **Mock Data Integration**: For the purpose of this assessment, all transaction processing, currency rates, and wallet validation are simulated with local mock data and `setTimeout` delays (e.g., the "Converting..." state). No real backend endpoints are called.
 -   **State Management**: I opted for local React state (`useState`) lifted to the parent components (`TransactionModal`, `CryptoToCash`) rather than a global store like Redux or Zustand. This keeps the architecture simple and sufficient for the current scope.
 -   **Validation**: Custom validation logic is implemented using local state and regex patterns. While I mentioned Zod/React Hook Form as a future improvement, the current implementation provides robust error handling, type safety (preventing non-numeric input), and user feedback without external dependencies.
 -   **Asset Selection**: Icons and flags are static assets in the `public` folder. In a real app, these might be served from a CDN.

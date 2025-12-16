@@ -92,7 +92,7 @@ export const Selector: FC<SelectorProps> = ({
                                 setIsOpen(false);
                                 setSearchQuery("");
                             }}
-                            className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-[#f9fafb] transition-colors text-left rounded-xl ${selectedValue === option.value ? "bg-[#f0fdf4]" : ""
+                            className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-[#f9fafb] transition-colors text-left rounded-xl ${selectedValue === option.value ? "bg-[#f5f5f5]" : ""
                                 }`}
                         >
                             {option.icon && option.icon.startsWith('/') ? (

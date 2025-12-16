@@ -34,6 +34,7 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
     });
     const [transactionId, setTransactionId] = useState("");
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [isConverting, setIsConverting] = useState(false);
 
     const handleAccountNumberChange = (number: string) => {
         setAccountNumber(number);
@@ -245,13 +246,18 @@ export const CryptoToCash = ({ onFlowChange }: { onFlowChange?: (isFlowActive: b
                 <Button
                     onClick={() => {
                         if (validateStep1()) {
-                            setStep("recipient-bank");
+                            setIsConverting(true);
+                            setTimeout(() => {
+                                setIsConverting(false);
+                                setStep("recipient-bank");
+                            }, 1500);
                         }
                     }}
-                    className="flex w-full h-[60px] items-center justify-center gap-2 px-10 py-5 bg-green rounded-[30px] hover:bg-green/90"
+                    disabled={isConverting}
+                    className="flex w-full h-[60px] items-center justify-center gap-2 px-10 py-5 bg-green rounded-[30px] hover:bg-green/90 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                     <span className="relative w-fit -mt-px font-bold text-[#e6fbf2] text-base tracking-[0] leading-[normal]">
-                        Convert now
+                        {isConverting ? "Converting..." : "Convert now"}
                     </span>
                 </Button>
             </div>
